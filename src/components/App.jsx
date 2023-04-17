@@ -30,6 +30,13 @@ export class App extends Component {
       alert(`${name} is already in contacts.`);
       return;
     }
+    // Check if contact with same number already exists
+    const existingNumber = contacts.find(contact => contact.number === number);
+
+    if (existingNumber) {
+      alert(`Contact with number ${number} already exists.`);
+      return;
+    }
 
     const contact = {
       id: nanoid(),
