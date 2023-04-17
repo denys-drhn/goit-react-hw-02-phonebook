@@ -4,6 +4,7 @@ import Section from './Section/Section';
 import ContactForm from './ContactForm/ContactForm';
 import ContactList from './ContactList/ContactList';
 import Filter from './Filter/Filter';
+import Notification from './Notofication/Notification';
 
 export class App extends Component {
   state = {
@@ -65,7 +66,7 @@ export class App extends Component {
   };
 
   render() {
-    const { filter } = this.state;
+    const { filter, contacts } = this.state;
     const filteredContacts = this.getVisibleContacts();
 
     return (
@@ -74,11 +75,17 @@ export class App extends Component {
           <ContactForm onSubmit={this.addContact} />
         </Section>
         <Section title="Contacts">
-          <Filter value={filter} onChange={this.changeFilter} />
-          <ContactList
-            contacts={filteredContacts}
-            onDeleteContact={this.deleteContact}
-          />
+          {contacts.length === 0 ? (
+            <Notification message="No contacts found." />
+          ) : (
+            <>
+              <Filter value={filter} onChange={this.changeFilter} />
+              <ContactList
+                contacts={filteredContacts}
+                onDeleteContact={this.deleteContact}
+              />{' '}
+            </>
+          )}
         </Section>
       </>
     );
